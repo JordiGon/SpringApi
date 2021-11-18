@@ -18,14 +18,23 @@ public class GasolineraModel {
     @JsonIgnoreProperties({"gasolinera","empleadosRegistrados","cliente"})
     @OneToMany(mappedBy = "gasolinera", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<GasolinerasAutorizadasModel> vehiculos;
-    @JsonIgnoreProperties("sede")
+    @JsonIgnoreProperties({"sede"})
     @OneToMany(mappedBy = "sede", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<EmpleadosModel> empleadosRegistrados;
-    @JsonIgnoreProperties({"gasolinera", "status", "tipo_consumo", "cliente"})
+    @JsonIgnoreProperties({"gasolinera", "status", "tipo_consumo", "cliente","cambios"})
     @OneToMany(mappedBy = "gasolinera", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<TransaccionModel> transacciones;
+    @JsonIgnoreProperties("gasolinera")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "gasolinera")
+    private Set<BitacoraDeCambiosModel> cambios;
     public Integer getId_gasolinera() {
         return id_gasolinera;
+    }
+    public Set<BitacoraDeCambiosModel> getCambios() {
+        return cambios;
+    }
+    public void setCambios(Set<BitacoraDeCambiosModel> cambios) {
+        this.cambios = cambios;
     }
     public Set<TransaccionModel> getTransacciones() {
         return transacciones;

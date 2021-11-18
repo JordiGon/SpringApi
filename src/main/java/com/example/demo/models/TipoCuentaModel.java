@@ -14,7 +14,7 @@ public class TipoCuentaModel {
     @Column(unique = true, nullable = false, name = "id_tipo_de_cuenta")
     private Integer id_tipo_de_cuenta;
     private String descripcion; 
-    @JsonIgnoreProperties({"tipo_de_cuenta", "vehiculos"})
+    @JsonIgnoreProperties({"tipo_de_cuenta", "vehiculos","transacciones"})
     @OneToMany(mappedBy = "tipo_de_cuenta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ClienteModel> cliente;
     public Integer getId_tipo_de_cuenta() {

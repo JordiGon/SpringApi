@@ -21,12 +21,21 @@ public class ClienteModel {
     @ManyToOne(fetch= FetchType.EAGER ,optional = true)
     @JoinColumn(name="id_tipo_de_cuenta_fk")
     private TipoCuentaModel tipo_de_cuenta; 
-    @JsonIgnoreProperties("cliente")
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"cliente", "diascons", "restriccion", "gasolineras"})
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<VehiculoModel> vehiculos;
-    @JsonIgnoreProperties({"gasolinera", "status", "tipo_consumo", "cliente"})
+    @JsonIgnoreProperties({"gasolinera", "cliente", "cambios"})
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "cliente")
     private Set<TransaccionModel> transacciones;
+    @JsonIgnoreProperties({"cliente"})
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<BitacoraDeCambiosModel> cambios;
+    public Set<BitacoraDeCambiosModel> getCambios() {
+        return cambios;
+    }
+    public void setCambios(Set<BitacoraDeCambiosModel> cambios) {
+        this.cambios = cambios;
+    }
     public Set<TransaccionModel> getTransacciones() {
         return transacciones;
     }

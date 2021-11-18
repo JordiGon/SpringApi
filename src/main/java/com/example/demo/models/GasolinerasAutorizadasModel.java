@@ -12,7 +12,7 @@ public class GasolinerasAutorizadasModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_autorizadas", nullable = false, unique = true)
     private Integer id_autorizadas;
-    @JsonIgnoreProperties({"vehiculos", "empleadosRegistrados","cliente"})
+    @JsonIgnoreProperties({"vehiculos", "empleadosRegistrados","cliente","transacciones"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "id_gasolinera_fk")
     private GasolineraModel gasolinera;

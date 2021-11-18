@@ -16,7 +16,7 @@ public class EmpleadosModel {
     private String correo;
     private String password;
     //private Integer id_gasolinera_fk;
-    @JsonIgnoreProperties({"empleadosRegistrados","vehiculos"})
+    @JsonIgnoreProperties({"empleadosRegistrados","vehiculos", "transacciones"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "id_gasolinera_fk")
     private GasolineraModel sede;

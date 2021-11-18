@@ -15,11 +15,20 @@ public class TipoConsumoModel {
     private Integer id_tipo_consumo;
     private Float precio_galon;
     private String nombre_producto;
-    @JsonIgnoreProperties({"gasolinera", "status", "tipo_consumo", "cliente"})
+    @JsonIgnoreProperties({"gasolinera", "status", "tipo_consumo", "cliente", "cambios"})
     @OneToMany(mappedBy = "tipo_consumo", fetch = FetchType.EAGER)
     private Set<TransaccionModel> transacciones;
+    @JsonIgnoreProperties("producto")
+    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<BitacoraDeCambiosModel> cambios;
     public Set<TransaccionModel> getTransacciones() {
         return transacciones;
+    }
+    public Set<BitacoraDeCambiosModel> getCambios() {
+        return cambios;
+    }
+    public void setCambios(Set<BitacoraDeCambiosModel> cambios) {
+        this.cambios = cambios;
     }
     public void setTransacciones(Set<TransaccionModel> transacciones) {
         this.transacciones = transacciones;

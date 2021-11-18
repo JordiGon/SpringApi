@@ -23,11 +23,11 @@ public class VehiculoModel {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name ="restriccion_horario_id_fk", nullable = true)
     private RestriccionHorarioModel restriccion;
-    @JsonIgnoreProperties({"vehiculos","tipo_de_cuenta"})
+    @JsonIgnoreProperties({"vehiculos","tipo_de_cuenta","transacciones"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name="id_cliente_fk", nullable = true)
     private ClienteModel cliente;
-    @JsonIgnoreProperties("vehiculo")
+    @JsonIgnoreProperties({"vehiculo","transacciones"})
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "vehiculo")
     private Set<GasolinerasAutorizadasModel> gasolineras;
 

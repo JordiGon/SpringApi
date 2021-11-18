@@ -1,6 +1,9 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,11 +14,62 @@ public class BitacoraDeCambiosModel {
     @Column(nullable = false, unique = true, name = "id_cambio")
     private Integer id_cambio;
     private LocalDateTime fechahora;
-    private Integer id_transaccion_fk;
-    private Integer id_cliente_fk;
-    private Integer id_gasolinera_fk;
-    private Integer id_status_fk;
-    private Integer id_tipo_consumo_fk;
+//    private Integer id_transaccion_fk;   
+    @JsonIgnoreProperties({"cambios", "cliente", "gasolinera", "status", "tipo_consumo"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name="id_transaccion_fk")
+    private TransaccionModel transaccion;
+    public TransaccionModel getTransaccion() {
+        return transaccion;
+    }
+    public TipoConsumoModel getProducto() {
+        return producto;
+    }
+    public void setProducto(TipoConsumoModel producto) {
+        this.producto = producto;
+    }
+    public StatusTransaccionModel getStatus() {
+        return status;
+    }
+    public void setStatus(StatusTransaccionModel status) {
+        this.status = status;
+    }
+    public void setTransaccion(TransaccionModel transaccion) {
+        this.transaccion = transaccion;
+    }
+    //private Integer id_cliente_fk;
+    @JsonIgnoreProperties({"cambios","vehiculos", "transacciones", "tipo_de_cuenta"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name="id_cliente_fk")
+    private ClienteModel cliente;
+    //private Integer id_gasolinera_fk;
+    @JsonIgnoreProperties({"cambios", "empleadosRegistrados", "vehiculos", "transacciones"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name ="id_gasolinera_fk")
+    private GasolineraModel gasolinera;
+    public GasolineraModel getGasolinera() {
+        return gasolinera;
+    }
+    public void setGasolinera(GasolineraModel gasolinera) {
+        this.gasolinera = gasolinera;
+    }
+    //private Integer id_status_fk;
+    @JsonIgnoreProperties({"cambios", "transacciones"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name="id_status_fk")
+    private StatusTransaccionModel status;
+    //private Integer id_tipo_consumo_fk;
+    @JsonIgnoreProperties({"cambios","transacciones"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name="id_tipo_consumo_fk")
+    private TipoConsumoModel producto;
+    public ClienteModel getCliente() {
+        return cliente;
+    }
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
+    }
+    
     public Integer getId_cambio() {
         return id_cambio;
     }
@@ -27,35 +81,5 @@ public class BitacoraDeCambiosModel {
     }
     public void setFechahora(LocalDateTime fechahora) {
         this.fechahora = fechahora;
-    }
-    public Integer getId_transaccion_fk() {
-        return id_transaccion_fk;
-    }
-    public void setId_transaccion_fk(Integer id_transaccion_fk) {
-        this.id_transaccion_fk = id_transaccion_fk;
-    }
-    public Integer getId_cliente_fk() {
-        return id_cliente_fk;
-    }
-    public void setId_cliente_fk(Integer id_cliente_fk) {
-        this.id_cliente_fk = id_cliente_fk;
-    }
-    public Integer getId_gasolinera_fk() {
-        return id_gasolinera_fk;
-    }
-    public void setId_gasolinera_fk(Integer id_gasolinera_fk) {
-        this.id_gasolinera_fk = id_gasolinera_fk;
-    }
-    public Integer getId_status_fk() {
-        return id_status_fk;
-    }
-    public void setId_status_fk(Integer id_status_fk) {
-        this.id_status_fk = id_status_fk;
-    }
-    public Integer getId_tipo_consumo_fk() {
-        return id_tipo_consumo_fk;
-    }
-    public void setId_tipo_consumo_fk(Integer id_tipo_consumo_fk) {
-        this.id_tipo_consumo_fk = id_tipo_consumo_fk;
     }
 }

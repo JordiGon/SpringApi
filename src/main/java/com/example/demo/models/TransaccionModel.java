@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import java.util.Set;
+
 import java.sql.Date;
 
 import javax.persistence.*;
@@ -16,24 +18,33 @@ public class TransaccionModel {
     private Date fecha;
     private Float volumen;
     private Float monto;
-    @JsonIgnoreProperties({"transacciones", "tipo_de_cuenta", "vehiculos"})
+    @JsonIgnoreProperties({"transacciones", "tipo_de_cuenta", "vehiculos","cambios"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "id_cliente_fk")
     private ClienteModel cliente;
-    @JsonIgnoreProperties({"transacciones", "vehiculos","empleadosRegistrados", })
+    @JsonIgnoreProperties({"transacciones", "vehiculos","empleadosRegistrados","cambios"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name= "id_gasolinera_fk")
     private GasolineraModel gasolinera;
-    @JsonIgnoreProperties({"transacciones"})
+    @JsonIgnoreProperties({"transacciones","cambios"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name="id_status_fk")
     private StatusTransaccionModel status;
-    @JsonIgnoreProperties({"transacciones"})
+    @JsonIgnoreProperties({"transacciones","cambios"})
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "tipo_consumo_fk")
     private TipoConsumoModel tipo_consumo;
+    @JsonIgnoreProperties("transaccion")
+    @OneToMany(mappedBy="transaccion",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<BitacoraDeCambiosModel> cambios;
     public StatusTransaccionModel getStatus() {
         return status;
+    }
+    public Set<BitacoraDeCambiosModel> getCambios() {
+        return cambios;
+    }
+    public void setCambios(Set<BitacoraDeCambiosModel> cambios) {
+        this.cambios = cambios;
     }
     public ClienteModel getCliente() {
         return cliente;
